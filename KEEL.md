@@ -12,6 +12,7 @@ This document has two uses:
 
 - **Guide for developers:** It explains how to create and organize a new project.
 - **Setup prompt for AI coding assistants:** Claude Code, GitHub Copilot, or another assistant that reads `AGENTS.md` (such as Codex or Cursor) can follow it to set up a new project, or to bring an existing project's documentation up to this standard.
+- **Source of the KEEL skill:** the same standard is also installed once, as a set of skills, so it works in every project without this file (see *The KEEL skill*).
 
 > [!IMPORTANT]
 >
@@ -29,11 +30,31 @@ This document has two uses:
 2. The AI reads it, checks the project (see Check first), and then sets up, migrates, or upgrades the documentation.
 3. Afterward, the developer may keep, move, archive, or delete the file. While it is in the root folder, it is the authority (see below). If it is absent, the AI follows the project's existing docs and the developer's instructions.
 
+## The KEEL skill
+
+The standard is also packaged as 6 skills, generated from this file by `build/build.py` in the repository, with the same version. A developer installs them once at user level, and they work in every project without this file. Each skill is 1 task; `keel` is the general one for a developer who is not sure which task they need, or who wants to bring a project to the newest version.
+
+| Skill | Task |
+|---|---|
+| `keel` | Looks at the project, chooses the path (new setup, migration, upgrade, or switch), and does it |
+| `keel-init` | New setup from the templates, for a project with no docs yet |
+| `keel-upgrade` | Migrate existing docs, upgrade an older version, or switch a `KEEL.md` project to the skill |
+| `keel-check` | Write or run the docs check script, and write a drift report |
+| `keel-as-built` | The as-built review |
+| `keel-interview` | The SPEC interview |
+
+- **Claude Code:** the repository is a plugin marketplace. Run `/plugin marketplace add DominusFL/keel`, then `/plugin install keel@keel`. The skills are `/keel:keel`, `/keel:keel-init`, and so on. Updates come from the repository through `/plugin`.
+- **Codex, Cursor, GitHub Copilot, or Claude Code without the plugin:** run `npx skills add DominusFL/keel -g` (needs Node), or run `install.sh` from the repository, which needs only `git`. Both install the same skill folders into each tool's user-level skills folder, and both can update them later.
+
+The `README.md` of the repository has the full install and update steps. A project that uses this file can switch to the skill at any time (see *Switch to the skill* under Initialization rules), and a project set up by the skill can add this file later; the one in the root folder is then the authority.
+
 ## Authority and file handling
 
 When `KEEL.md` is in the project root, it is the authoritative reference for project structure, documentation standards, naming conventions, required, recommended, and optional artifacts, and templates and seed content, including for documentation created later. Direct developer instructions and explicit project-specific requirements override it. When project docs disagree with each other, the Precedence list in `AGENTS.md` says which one wins.
 
 AI assistants may read and use the file, but must not delete, rename, move, modify, archive, or otherwise manage it without direct, explicit developer instruction. The developer controls its location and lifecycle, and may ask an AI assistant to update it.
+
+When `KEEL.md` is absent and the KEEL skill is installed, the skill is the reference for the same things. When both are present, `KEEL.md` wins; if their versions differ, tell the developer before you continue.
 
 ## Initialization rules
 
@@ -41,6 +62,7 @@ AI assistants may read and use the file, but must not delete, rename, move, modi
   - **Upgrade:** `AGENTS.md` (or `CLAUDE.md` before 1.2.0) has a version stamp older than this document's version, and there is no other documentation to bring in. A stamp that names *AI-PROJECT-DOCS-STANDARD* is an older version of this document (KEEL 1.x). Follow the upgrade-only path in *Migrating or upgrading an existing project* (near the end of this document).
   - **Migration:** the project has any file that the Inventory step would find, even a single `README.md` or rules file. Follow *Migrating or upgrading an existing project*.
   - **New setup:** the project has none of these. Create the files from the templates.
+  - **Switch to the skill:** the KEEL skill is running, `KEEL.md` is in the root folder, and the developer asked to switch. Run the Upgrade path first if the stamp is older than the skill's version. Then set the stamp to the skill's version and, only on the developer's explicit instruction, delete `KEEL.md` or move it where the developer says. Report what changed.
 
   If the root folder also holds `AI-PROJECT-DOCS-STANDARD.md`, it is an older version of this document: follow this file, and tell the developer. Tell the developer which path you chose and why before you continue. When the path is complete, offer the as-built review if the project has code.
 - **As-built review:** If the project has code, offer this review after the setup, migration, or upgrade is complete and reported. The developer may decline or choose only some areas. On approval, follow these steps in order:
@@ -58,7 +80,7 @@ AI assistants may read and use the file, but must not delete, rename, move, modi
 
 ```
 project/
-├── KEEL.md                 (this file; retained at the developer's discretion)
+├── KEEL.md                 (this file, or the KEEL skill in its place; retained at the developer's discretion)
 ├── README.md
 ├── AGENTS.md
 ├── CLAUDE.md
@@ -422,8 +444,8 @@ Before calling a task done:
 AI working rules for every AI coding tool on this project. CLAUDE.md and .github/copilot-instructions.md only point here. Keep this file under about 120 lines; cut any line whose removal would not cause mistakes.
 
 ## Project documentation standard
-- Aligned to KEEL v2.0.0 (update when the docs are realigned).
-- If `KEEL.md` is in the project root, read it before creating docs or changing the doc structure; it is the authority. Never delete, rename, move, modify, or archive it without explicit developer instruction. If it is absent, follow the existing docs and keep this section. Developer instructions override it.
+- Aligned to KEEL 2.0.0 (https://github.com/DominusFL/keel). Update when the docs are realigned.
+- If `KEEL.md` is in the project root, read it before creating docs or changing the doc structure; it is the authority. Never delete, rename, move, modify, or archive it without explicit developer instruction. If it is absent, follow the KEEL skill when it is installed, else the existing docs, and keep this section. Developer instructions override both.
 - Precedence, highest first: developer instruction > docs/decisions/ > SPEC.md and DESIGN.md (accepted text, not PROPOSED blocks) > ARCHITECTURE.md and PLAN.md > HANDOFF.md and RESEARCH.md > the code (evidence only) > docs/archive/ (never a source).
 
 ## Commands
@@ -767,7 +789,7 @@ After creating the initial files, confirm each item and report any that fail.
 - [ ] No PROPOSED blocks exist, unless a migration or the as-built review created them; those are listed in the report and in `HANDOFF.md` under Waiting.
 - [ ] No file contains secrets or customer data, and `.gitignore` excludes `.env` and `test-results/` if the project uses version control.
 - [ ] After a migration: no Superseded content was migrated, and `docs/archive/INDEX.md` lists every archived file.
-- [ ] No existing file was overwritten without the developer's approval, and `KEEL.md` was not deleted, renamed, moved, or modified.
+- [ ] No existing file was overwritten without the developer's approval, and `KEEL.md` was not deleted, renamed, moved, or modified, except by a switch to the skill on the developer's explicit instruction.
 
 ## Migrating or upgrading an existing project
 
@@ -809,7 +831,7 @@ Use this section when the project already has documentation: another format, a s
    - **1.4.0 to 1.5.0:** In `AGENTS.md`, replace the template sections with their 1.5.0 versions (the Making changes and Testing sections are new, and most others are shorter), and keep the project's own lines, such as Conventions and the Skills list. Keep only the Docs entries for files that exist, plus the always-listed ones, and add the "Not used" line. Add the Testing lines, including How to run tests and the results file, to `ARCHITECTURE.md`, and build its test map from the existing tests as in step 6. Update the PLAN.md Definition of done and the release steps in `RELEASE-CHECKLIST.md`. Add `test-results/` to `.gitignore` if the project uses version control. Change Jira headers to `> Jira: PROJ-# (name of project)`. Add the compaction note to the Claude-only notes in `CLAUDE.md`. Propose cuts to `AGENTS.md` under rule 8, and wait for approval. Offer the SPEC interview, and propose the new SPEC template guidance as SPEC changes.
    - **1.5.0 to 1.5.1:** In `AGENTS.md`, add the 2 new Making changes lines and the new Never rule. Extend the evidence line in the PLAN.md Definition of done with the two docs lines.
    - **1.5.1 to 2.0.0:** The standard is now KEEL. New headings and template lines are structure: add them directly once the developer approves the plan, with "(Not documented yet.)" as content. Only changes to accepted SPEC or DESIGN text go through PROPOSED blocks. Headers keep their `> Jira:` form; the standard now accepts any tracker name.
-     1. Root: during this version the root may hold `AI-PROJECT-DOCS-STANDARD.md` beside or instead of `KEEL.md`; follow `KEEL.md`. Set the stamp to `Aligned to KEEL v2.0.0`.
+     1. Root: during this version the root may hold `AI-PROJECT-DOCS-STANDARD.md` beside or instead of `KEEL.md`; follow `KEEL.md`. Set the stamp to `Aligned to KEEL 2.0.0 (https://github.com/DominusFL/keel)`. An existing stamp `Aligned to KEEL v2.0.0` is the same version in its earlier form: update it to the new form, and the `KEEL.md` line after it, the next time you edit `AGENTS.md`.
      2. `AGENTS.md`: replace every template section with its 2.0.0 version (all changed; Reporting and the precedence line are new; the cap is about 120 lines), keep the project's own lines, and add the Conventions lines for ask-before-touching paths and area owners. Propose cuts under rule 8 and wait for approval.
      3. `ARCHITECTURE.md`: convert the test map to the area map (add Code, Entry points, ACs, and Confidence; mark rows Inferred); add `Verified: (not yet verified)` under the header; add the Operations section with Known traps, the data lifecycle line, and the Testing lines for the docs check, the AC citation, and the results files; write the docs check script and add its row.
      4. `SPEC.md`: add `Verified: (not yet verified)`, the Glossary and Constraints headings, and the Area name on each feature group. Convert each proposed SPEC or DESIGN change waiting in the old `HANDOFF.md` Open questions into a PROPOSED block.
@@ -825,7 +847,7 @@ Use this section when the project already has documentation: another format, a s
 
 Add a new entry at the top for each update, with its version and date, and update the version stamp in the `AGENTS.md` template to match.
 
-- **2.0.0 (October 31, 2026):** Renamed to KEEL; any tracker, not only Jira. Handoff: a close routine with a printed routing report, a 40-line cap, dated bullets in 5 typed sections, and per-developer files for teams. Drift: SPEC and DESIGN proposals are PROPOSED blocks in the file, the test map became the area map, and a required docs check, a drift report, and Verified dates were added. Guardrails: risk classes, a ready card (rule 10), evidence in a fixed task summary (rule 11), a bug repro gate, no weakened tests, and a precedence line in `AGENTS.md`. Existing code: a 6-step as-built review. Teams: a work board with a claim rule in `PLAN.md`. New content: Operations, Known traps, Glossary, Constraints, Owners and support, and dependency review. `AGENTS.md` is capped at about 120 lines.
+- **2.0.0 (October 31, 2026):** Renamed to KEEL; any tracker, not only Jira. Handoff: a close routine with a printed routing report, a 40-line cap, dated bullets in 5 typed sections, and per-developer files for teams. Drift: SPEC and DESIGN proposals are PROPOSED blocks in the file, the test map became the area map, and a required docs check, a drift report, and Verified dates were added. Guardrails: risk classes, a ready card (rule 10), evidence in a fixed task summary (rule 11), a bug repro gate, no weakened tests, and a precedence line in `AGENTS.md`. Existing code: a 6-step as-built review. Teams: a work board with a claim rule in `PLAN.md`. New content: Operations, Known traps, Glossary, Constraints, Owners and support, and dependency review. `AGENTS.md` is capped at about 120 lines. The KEEL skill: 6 skills (`keel`, `keel-init`, `keel-upgrade`, `keel-check`, `keel-as-built`, `keel-interview`) generated from this file by `build/build.py` and installed once at user level, through the Claude Code plugin marketplace in this repository, `npx skills add`, or `install.sh`, for Claude Code, Codex, Cursor, and GitHub Copilot; a Switch to the skill path; and the neutral stamp `Aligned to KEEL 2.0.0 (https://github.com/DominusFL/keel)`, the same for the file and the skill.
 - **1.5.1 (October 19, 2026):** Doc updates are no longer skipped: the AI searches `docs/` for what it changed, proposes SPEC and DESIGN edits in the same task, never defers doc updates to `HANDOFF.md`, and lists docs updated and checked in each task summary.
 - **1.5.0 (October 19, 2026):** Added progressive testing (rule 9): targeted tests by default, a test map in `ARCHITECTURE.md`, scripted test runs, and a full regression only at releases or with developer approval. `RELEASE-CHECKLIST.md` is now required. Added the recommended `CHANGELOG.md`, a "Not used" line for removed files, an upgrade-only path, a fresh-context review before releases, an optional SPEC interview, plan-first and stop-after-2-failures rules, evidence in task summaries, a single setup prompt with automatic detection, and an optional as-built review. Shortened the introduction and the `AGENTS.md` template, clarified `DESIGN-GUIDE.html`, and added a compaction note to `CLAUDE.md`.
 - **1.4.0 (October 14, 2026):** Migration now finds superseded documentation and migrates only current content. Added the Resolve currency step and currency table, decision notes and research entries for choices that changed, a report of superseded approaches still in the code, path-preserving archiving with `docs/archive/INDEX.md`, and an upgrade path. Added rules against new versions of a doc beside the old one and against reading the archive as current. The `AGENTS.md` Docs list now follows the table order.

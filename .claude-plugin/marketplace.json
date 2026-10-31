@@ -1,0 +1,21 @@
+{
+  "name": "keel",
+  "owner": {
+    "name": "Rick Flashman",
+    "url": "https://github.com/DominusFL/keel"
+  },
+  "description": "Marketplace for the KEEL skills. Add with: /plugin marketplace add DominusFL/keel",
+  "plugins": [
+    {
+      "name": "keel",
+      "source": "./",
+      "description": "KEEL: a documentation and working standard for AI-developed projects. 6 skills: keel, keel-init, keel-upgrade, keel-check, keel-as-built, keel-interview.",
+      "category": "productivity",
+      "tags": [
+        "documentation",
+        "standard",
+        "keel"
+      ]
+    }
+  ]
+}
