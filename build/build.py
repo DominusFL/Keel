@@ -10,6 +10,7 @@ KEEL.md is the single source of truth. This script reads it and writes:
   templates/README.md with the guidance for each one
 - .claude-plugin/plugin.json and .claude-plugin/marketplace.json, with the
   version taken from KEEL.md
+- the version badge in README.md, set to the same version
 
 Usage:
     python3 build/build.py          # write the files
@@ -555,6 +556,18 @@ def build_manifests(version: str) -> dict[str, str]:
     }
 
 
+BADGE_RE = re.compile(r"(https://img\.shields\.io/badge/version-)[0-9.]+(-[0-9a-fA-F]+\))")
+
+
+def readme_with_badge(version: str) -> str:
+    """Return README.md with its version badge set to the KEEL.md version."""
+    text = (ROOT / "README.md").read_text(encoding="utf-8")
+    new, n = BADGE_RE.subn(lambda m: f"{m.group(1)}{version}{m.group(2)}", text, count=1)
+    if n != 1:
+        sys.exit("build: README.md has no version badge (img.shields.io/badge/version-X.Y.Z-color)")
+    return new
+
+
 def generate() -> dict[str, str]:
     """Build every output file in memory. Returns {path relative to ROOT: content}."""
     text = SOURCE.read_text(encoding="utf-8")
@@ -569,6 +582,7 @@ def generate() -> dict[str, str]:
         for rel, content in build_skill(name, SKILL_INTROS[name], sections, templates, tintro, version, date).items():
             out[f"skills/{name}/{rel}"] = content
     out.update(build_manifests(version))
+    out["README.md"] = readme_with_badge(version)
     return out
 
 
@@ -603,7 +617,7 @@ def check(files: dict[str, str]) -> int:
         for p in problems:
             print("  " + p)
         return 1
-    print("build --check: skills/ and .claude-plugin/ match KEEL.md")
+    print("build --check: skills/, .claude-plugin/ and the README badge match KEEL.md")
     return 0
 
 
