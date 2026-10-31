@@ -299,7 +299,7 @@ Every change gets 1 class before work starts. The class is defined here once; ru
 
 ## Docs check and drift report
 
-**Docs check** is a saved script in the project's own language, with no new runtime or dependency. It is the one script this standard asks for. It is listed in the area map as area *Docs* and runs with the targeted tests of every change; a red check is a failing test. The AI writes it at setup or upgrade and keeps the list of checks, with these definitions, in the script's header comment, so the list survives without this skill. It writes its results to `test-results/docs.md`, so the area test results in `test-results/latest.md` survive the same task. It checks:
+**Docs check** is a saved script in the project's own language, with no new runtime or dependency. When the project has no language yet, check which runtimes are installed on the developer's machine and use one of them; if none fits, write a shell script (`sh` on macOS and Linux, PowerShell on Windows). Port the script when the stack is chosen, and record that in `ARCHITECTURE.md`. It is the one script this standard asks for. It is listed in the area map as area *Docs* and runs with the targeted tests of every change; a red check is a failing test. The AI writes it at setup or upgrade and keeps the list of checks, with these definitions, in the script's header comment, so the list survives without this skill. It writes its results to `test-results/docs.md`, so the area test results in `test-results/latest.md` survive the same task. It checks:
 
 1. `AGENTS.md` is under about 120 lines and has the version stamp.
 2. `docs/HANDOFF.md` and each `docs/handoff/*.md` is under about 40 lines, and every bullet starts with a date.
