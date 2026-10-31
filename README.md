@@ -6,9 +6,8 @@
 
 Like the keel of a ship, it keeps a project steady and on course when the AI tool, the AI model, or the developer changes.
 
-[![Version](https://img.shields.io/github/v/tag/DominusFL/keel?label=version&color=0b5fff)](https://github.com/DominusFL/keel/releases)
-[![Build check](https://github.com/DominusFL/keel/actions/workflows/check.yml/badge.svg)](https://github.com/DominusFL/keel/actions/workflows/check.yml)
-[![License: MIT](https://img.shields.io/github/license/DominusFL/keel?color=green)](LICENSE)
+[![Version](https://img.shields.io/badge/version-2.0.0-0b5fff)](https://github.com/DominusFL/keel/releases)
+[![License: MIT](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 [![Works with](https://img.shields.io/badge/works%20with-Claude%20Code%20%7C%20Codex%20%7C%20Cursor%20%7C%20Copilot-6f42c1)](#-install)
 
 </div>
@@ -175,7 +174,7 @@ install.sh                   Installs or updates the skills for other tools
 ## 🏷️ Releasing a new version
 
 1. Edit `KEEL.md`: change the version line at the top and add the changelog entry.
-2. Run `python3 build/build.py`. It regenerates the skills and the manifests with the new version.
+2. Run `python3 build/build.py`. It regenerates the skills and the manifests with the new version, and updates the version badge in this README.
 3. Commit, then tag the release: `git tag v<version>` and `git push --tags`.
 
 `python3 build/build.py --check` fails when the generated files do not match `KEEL.md`. The GitHub Actions workflow runs it on every push.
