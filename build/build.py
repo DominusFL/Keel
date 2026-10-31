@@ -303,7 +303,13 @@ If the developer gave the ticket ID, the project description, or other instructi
 ## Steps
 
 1. **Check first.** Follow the Check first rule below. If the path is not *New setup*, stop and tell the developer to run `keel-upgrade` (migration or upgrade) or `keel` (any path). Do not continue with a project that already has docs.
-2. **Ask once, in 1 message, before you create any file:** the tracker and ticket ID (or none); the project name and a short description; and whether the project has a UI. Never take the project name from the folder name. Skip an item the developer already gave with the command. If the developer does not supply an item, leave its placeholder (see *Linking to the project tracker*).
+2. **Ask before you create any file.** Send this message, with all 3 questions, and wait for the answer. Skip only a question the developer already answered with the command. Never take the project name from the folder name. If the developer does not answer an item, leave its placeholder (see *Linking to the project tracker*).
+
+       Before I create the files, 3 questions:
+       1. Tracker and ticket ID, with the ticket link if you have one (or "none"):
+       2. Project name and a short description:
+       3. Does the project have a user interface (yes or no)?
+
 3. **Create the required files** in numbered order from `templates/` (guidance for each file: `templates/README.md`). Create optional files only where the table says they are needed now, such as `docs/DESIGN.md` for a project with a UI. Follow the folder layout exactly.
 4. **Write the docs check script** and add its row to the area map (see *Docs check and drift report*).
 5. **Run the Initialization checklist** at the end of this file and report any item that fails.
