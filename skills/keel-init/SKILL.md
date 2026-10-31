@@ -16,7 +16,13 @@ If the developer gave the ticket ID, the project description, or other instructi
 ## Steps
 
 1. **Check first.** Follow the Check first rule below. If the path is not *New setup*, stop and tell the developer to run `keel-upgrade` (migration or upgrade) or `keel` (any path). Do not continue with a project that already has docs.
-2. **Ask once, in 1 message, before you create any file:** the tracker and ticket ID (or none); the project name and a short description; and whether the project has a UI. Never take the project name from the folder name. Skip an item the developer already gave with the command. If the developer does not supply an item, leave its placeholder (see *Linking to the project tracker*).
+2. **Ask before you create any file.** Send this message, with all 3 questions, and wait for the answer. Skip only a question the developer already answered with the command. Never take the project name from the folder name. If the developer does not answer an item, leave its placeholder (see *Linking to the project tracker*).
+
+       Before I create the files, 3 questions:
+       1. Tracker and ticket ID, with the ticket link if you have one (or "none"):
+       2. Project name and a short description:
+       3. Does the project have a user interface (yes or no)?
+
 3. **Create the required files** in numbered order from `templates/` (guidance for each file: `templates/README.md`). Create optional files only where the table says they are needed now, such as `docs/DESIGN.md` for a project with a UI. Follow the folder layout exactly.
 4. **Write the docs check script** and add its row to the area map (see *Docs check and drift report*).
 5. **Run the Initialization checklist** at the end of this file and report any item that fails.
@@ -41,7 +47,12 @@ Never overwrite a file that already exists; merge or ask. The rest of this file 
   5. **Differences and health.** Report what is built but not specified, what is specified but not built, superseded approaches still in the code, areas with no tests, secrets found, and dependencies with known issues. Lasting findings go to `RESEARCH.md`; questions go to `HANDOFF.md` under Waiting. Set the Verified date in `ARCHITECTURE.md`, and in `SPEC.md` once the developer has reviewed it.
   6. **Stop conditions.** Change no code. Do not run tests unless the developer asks.
 - **Existing files:** Never overwrite a file or folder from this standard that already exists. Merge the new content in, or propose the change, and ask the developer first.
-- **Missing information:** Before you create any file, ask the developer once, in 1 message, for: the tracker and ticket ID (or none); the project name and a short description; and whether the project has a UI. Never take the project name from the folder name. If the developer does not supply an item, leave its placeholder.
+- **Missing information:** Before you create any file, send the developer this message, with all 3 questions, and wait for the answer. Skip only a question the developer already answered. Never take the project name from the folder name. If the developer does not answer an item, leave its placeholder.
+
+      Before I create the files, 3 questions:
+      1. Tracker and ticket ID, with the ticket link if you have one (or "none"):
+      2. Project name and a short description:
+      3. Does the project have a user interface (yes or no)?
 - **SPEC interview:** After you seed or migrate `SPEC.md`, offer to interview the developer about its gaps: edge cases, non-goals, trade-offs, constraints, glossary terms, and acceptance criteria. Ask a few questions at a time, and skip questions the docs already answer. Write the resulting SPEC changes as PROPOSED blocks for acceptance (rule 1). The developer may decline. If you offer an as-built review, offer the interview after it.
 
 ## Folder layout
