@@ -58,7 +58,7 @@ When `KEEL.md` is absent and the KEEL skill is installed, the skill is the refer
   5. **Differences and health.** Report what is built but not specified, what is specified but not built, superseded approaches still in the code, areas with no tests, secrets found, and dependencies with known issues. Lasting findings go to `RESEARCH.md`; questions go to `HANDOFF.md` under Waiting. Set the Verified date in `ARCHITECTURE.md`, and in `SPEC.md` once the developer has reviewed it.
   6. **Stop conditions.** Change no code. Do not run tests unless the developer asks.
 - **Existing files:** Never overwrite a file or folder from this standard that already exists. Merge the new content in, or propose the change, and ask the developer first.
-- **Missing information:** If you need details the developer has not provided, such as the ticket ID or the project description, ask once. If they still do not supply them, leave the placeholder.
+- **Missing information:** Before you create any file, ask the developer once, in 1 message, for: the tracker and ticket ID (or none); the project name and a short description; and whether the project has a UI. Never take the project name from the folder name. If the developer does not supply an item, leave its placeholder.
 - **SPEC interview:** After you seed or migrate `SPEC.md`, offer to interview the developer about its gaps: edge cases, non-goals, trade-offs, constraints, glossary terms, and acceptance criteria. Ask a few questions at a time, and skip questions the docs already answer. Write the resulting SPEC changes as PROPOSED blocks for acceptance (rule 1). The developer may decline. If you offer an as-built review, offer the interview after it.
 
 ## Folder layout
