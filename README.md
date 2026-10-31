@@ -25,7 +25,7 @@ AI coding tools are fast, but they forget. Each new session, model, or tool star
 - The handoff note becomes a long memory dump that nobody reads.
 - Tests get skipped, and "done" means different things on different days.
 
-KEEL fixes this with a small set of documents and working rules that every AI coding tool can follow. The rules live in `AGENTS.md`, a shared format that Claude Code, GitHub Copilot, Codex, and Cursor all read. The documents hold the truth. The AI keeps them current in the same task, proposes changes to requirements instead of rewriting them, tests only what changed, and ends every task with evidence.
+A ship's keel is the long beam along the bottom of the hull. Every other part is built on it. It is the backbone of the ship: it holds the structure together and keeps the ship on course. KEEL is the backbone of an AI-developed project. It is a small set of documents and working rules that every AI coding tool can follow, and everything else is built on it. The rules live in `AGENTS.md`, a shared format that Claude Code, GitHub Copilot, Codex, and Cursor all read. The documents hold the truth. The AI keeps them current in the same task, proposes changes to requirements instead of rewriting them, tests only what changed, and ends every task with evidence.
 
 The full standard is one file: [`KEEL.md`](KEEL.md). It is both a guide for developers and a setup prompt for AI coding assistants.
 
