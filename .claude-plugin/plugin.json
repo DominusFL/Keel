@@ -2,7 +2,6 @@
   "name": "keel",
   "displayName": "KEEL",
   "description": "KEEL: a documentation and working standard for AI-developed projects. 6 skills: keel, keel-init, keel-upgrade, keel-check, keel-as-built, keel-interview.",
-  "version": "2.0.0",
   "author": {
     "name": "Rick Flashman"
   },

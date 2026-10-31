@@ -135,7 +135,7 @@ Call a skill by its name, for example `/keel-init`, or ask for it in words. Note
 
 ## 🔄 Updates
 
-Each release of KEEL bumps the version in `KEEL.md` and in the plugin.
+The plugin tracks the repository: every merged change is an update, and the KEEL version is in each skill.
 
 | Installed with | Update command |
 |---|---|
@@ -174,7 +174,7 @@ install.sh                   Installs or updates the skills for other tools
 ## 🏷️ Releasing a new version
 
 1. Edit `KEEL.md`: change the version line at the top and add the changelog entry.
-2. Run `python3 build/build.py`. It regenerates the skills and the manifests with the new version, and updates the version badge in this README.
+2. Run `python3 build/build.py`. It regenerates the skills and the manifests, and updates the version badge in this README.
 3. Commit, then tag the release: `git tag v<version>` and `git push --tags`.
 
 `python3 build/build.py --check` fails when the generated files do not match `KEEL.md`. The GitHub Actions workflow runs it on every push.

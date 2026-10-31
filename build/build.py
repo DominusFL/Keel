@@ -8,8 +8,8 @@ KEEL.md is the single source of truth. This script reads it and writes:
 - skills/<name>/references/*.md: sections of KEEL.md that a skill reads on demand
 - skills/<name>/templates/*: the starter templates, 1 file per template, plus
   templates/README.md with the guidance for each one
-- .claude-plugin/plugin.json and .claude-plugin/marketplace.json, with the
-  version taken from KEEL.md
+- .claude-plugin/plugin.json and .claude-plugin/marketplace.json (no version
+  field, so the plugin tracks commits)
 - the version badge in README.md, set to the same version
 
 Usage:
@@ -535,7 +535,8 @@ def build_manifests(version: str) -> dict[str, str]:
         "name": "keel",
         "displayName": "KEEL",
         "description": description,
-        "version": version,
+        # No "version": the plugin then tracks commits, so every push to the
+        # repository is an update. The KEEL version is in each SKILL.md.
         "author": {"name": "Rick Flashman"},
         "homepage": REPO_URL,
         "repository": REPO_URL,
