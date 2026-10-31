@@ -303,7 +303,7 @@ If the developer gave the ticket ID, the project description, or other instructi
 ## Steps
 
 1. **Check first.** Follow the Check first rule below. If the path is not *New setup*, stop and tell the developer to run `keel-upgrade` (migration or upgrade) or `keel` (any path). Do not continue with a project that already has docs.
-2. **Ask before you create any file.** Send this message, with all 3 questions, and wait for the answer. Skip only a question the developer already answered with the command. Never take the project name from the folder name. If the developer does not answer an item, leave its placeholder (see *Linking to the project tracker*).
+2. **Ask before you create any file.** Send this message, with all 3 questions, as plain chat text, and wait for the answer. Do not use a question tool or form: the answers are free text. Skip only a question the developer already answered with the command. Never take the project name from the folder name. If the developer does not answer an item, leave its placeholder (see *Linking to the project tracker*).
 
        Before I create the files, 3 questions:
        1. Tracker and ticket ID, with the ticket link if you have one (or "none"):
