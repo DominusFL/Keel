@@ -1,0 +1,17 @@
+# Checks that the generated skills and manifests match KEEL.md on every push and pull request.
+name: check
+on:
+  push:
+  pull_request:
+jobs:
+  build-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+      - name: Generated files match KEEL.md
+        run: python3 build/build.py --check
+      - name: Manifests are valid JSON
+        run: python3 -c "import json; [json.load(open(p)) for p in ('.claude-plugin/plugin.json', '.claude-plugin/marketplace.json')]"

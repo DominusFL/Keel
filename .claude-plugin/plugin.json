@@ -1,0 +1,19 @@
+{
+  "name": "keel",
+  "displayName": "KEEL",
+  "description": "KEEL: a documentation and working standard for AI-developed projects. 6 skills: keel, keel-init, keel-upgrade, keel-check, keel-as-built, keel-interview.",
+  "author": {
+    "name": "Rick Flashman"
+  },
+  "homepage": "https://github.com/rickflashman/keel",
+  "repository": "https://github.com/rickflashman/keel",
+  "license": "MIT",
+  "keywords": [
+    "documentation",
+    "standard",
+    "agents-md",
+    "spec",
+    "handoff",
+    "keel"
+  ]
+}
